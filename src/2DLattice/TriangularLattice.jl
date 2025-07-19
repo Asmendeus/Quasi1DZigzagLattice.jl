@@ -12,7 +12,7 @@ struct TriangularLattice <: AbstractLattice{2}
     L::Int
     W::Int
     function TriangularLattice(L::Int, W::Int)
-        @assert L ≥ W
+        L ≥ W || throw(ArgumentError("Quasi-one-dimensional triangular lattice requires L ≥ W!"))
         return new(L, W)
     end
 end
@@ -84,4 +84,31 @@ function getAllNNNPairs(latt::TriangularLattice; boundary::Symbol=:PBC)
         throw(ArgumentError("Undefined behavior of boundary condition `:$(boundary)`"))
     end
     return pairs
+end
+
+function Base.show(io::IO, latt::TriangularLattice)
+
+    function println_mainline(w::Int)
+        print(repeat(" ", Int((maxlen+1)/2)*(w-1)))
+        for l in 1:latt.L
+            site = string(getSite(latt, l, w))
+            len = length(site)
+            len_l = ceil(Int, (maxlen-len)/2)
+            len_r = floor(Int, (maxlen-len)/2)
+            print(repeat(" ", len_l) * site * repeat(" ", len_r) * "—")
+        end
+        println()
+    end
+
+    maxlen = length(string(latt.L*latt.W)) + 2
+    iseven(maxlen) && (maxlen += 1)
+    halflen = Int((maxlen+1)/2)
+
+    println(io, "$(latt.L) × $(latt.W) TriangularLattice:")
+    for w = latt.W:-1:1
+        print(repeat(" ", halflen*w + (isodd(halflen) ? 1 : 0)) * "╱")
+        println(repeat(repeat(" ", halflen-1) * "╲" * repeat(" ", halflen-1) * "╱", latt.L-1))
+        println_mainline(w)
+    end
+    return nothing
 end

@@ -16,7 +16,7 @@ struct HexagonalLattice <: AbstractLattice{2}
     L::Int
     W::Int
     function HexagonalLattice(L::Int, W::Int)
-        @assert L ≥ W
+        L ≥ W || throw(ArgumentError("Quasi-one-dimensional hexagonal lattice requires L ≥ W!"))
         return new(L, W)
     end
 end

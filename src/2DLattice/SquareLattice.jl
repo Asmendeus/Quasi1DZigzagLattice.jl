@@ -12,7 +12,7 @@ struct SquareLattice <: AbstractLattice{2}
     L::Int
     W::Int
     function SquareLattice(L::Int, W::Int)
-        @assert L ≥ W
+        L ≥ W || throw(ArgumentError("Quasi-one-dimensional square lattice requires L ≥ W!"))
         return new(L, W)
     end
 end
@@ -70,4 +70,29 @@ function getAllNNNPairs(latt::SquareLattice; boundary::Symbol=:PBC)
         throw(ArgumentError("Undefined behavior of boundary condition `:$(boundary)`"))
     end
     return pairs
+end
+
+function Base.show(io::IO, latt::SquareLattice)
+
+    function println_mainline(w::Int)
+        for l in 1:latt.L
+            site = string(getSite(latt, l, w))
+            len = length(site)
+            len_l = ceil(Int, (maxlen-len)/2)
+            len_r = floor(Int, (maxlen-len)/2)
+            print(repeat(" ", len_l) * site * repeat(" ", len_r) * "—")
+        end
+        println()
+    end
+
+    maxlen = length(string(latt.L*latt.W)) + 2
+    iseven(maxlen) && (maxlen += 1)
+    halflen = Int((maxlen-1)/2)
+
+    println(io, "$(latt.L) × $(latt.W) SquareLattice:")
+    for w = latt.W:-1:1
+        println(io, repeat(repeat(" ", halflen) * "|" * repeat(" ", halflen + 1), latt.L))
+        println_mainline(w)
+    end
+    return nothing
 end

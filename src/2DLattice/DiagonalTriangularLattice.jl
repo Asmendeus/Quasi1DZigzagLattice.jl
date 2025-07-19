@@ -12,7 +12,7 @@ struct DiagonalTriangularLattice <: AbstractLattice{2}
     L::Int
     W::Int
     function DiagonalTriangularLattice(L::Int, W::Int)
-        @assert L ≥ W
+        L ≥ W || throw(ArgumentError("Quasi-one-dimensional diagonal triangular lattice requires L ≥ W!"))
         return new(L, W)
     end
 end

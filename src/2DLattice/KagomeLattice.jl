@@ -16,7 +16,7 @@ struct KagomeLattice <: AbstractLattice{2}
     L::Int
     W::Int
     function KagomeLattice(L::Int, W::Int)
-        @assert L ≥ W
+        L ≥ W || throw(ArgumentError("Quasi-one-dimensional Kagome lattice requires L ≥ W!"))
         return new(L, W)
     end
 end
