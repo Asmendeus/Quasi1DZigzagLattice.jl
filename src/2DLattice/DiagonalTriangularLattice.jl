@@ -18,7 +18,7 @@ struct DiagonalTriangularLattice <: AbstractLattice{2}
 end
 const DiagTriaLatt = DiagonalTriangularLattice
 
-function Base.size(latt::DiagonalTriangularLattice) = (latt.L, latt.W)
+Base.size(latt::DiagonalTriangularLattice) = (latt.L, latt.W)
 
 function getSite(latt::DiagonalTriangularLattice, l::Int, w::Int)
     lp = mod(l-1, latt.L) + 1

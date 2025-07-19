@@ -22,7 +22,7 @@ struct KagomeLattice <: AbstractLattice{2}
 end
 const KagoLatt = KagomeLattice
 
-function Base.size(latt::KagomeLattice) = (latt.L, latt.W)
+Base.size(latt::KagomeLattice) = (latt.L, latt.W)
 
 function getSite(latt::KagomeLattice, ci::Int, l::Int, w::Int)
     lp = mod(l-1, latt.L) + 1

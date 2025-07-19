@@ -22,7 +22,7 @@ struct DiagonalHexagonalLattice <: AbstractLattice{2}
 end
 const DiagHexaLatt = DiagonalHexagonalLattice
 
-function Base.size(latt::DiagonalHexagonalLattice) = (latt.L, latt.W)
+Base.size(latt::DiagonalHexagonalLattice) = (latt.L, latt.W)
 
 function getSite(latt::DiagonalHexagonalLattice, ci::Int, l::Int, w::Int)
     lp = mod(l-1, latt.L) + 1

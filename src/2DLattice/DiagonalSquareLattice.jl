@@ -19,7 +19,7 @@ struct DiagonalSquareLattice <: AbstractLattice{2}
 end
 const DiagSquaLatt = DiagonalSquareLattice
 
-function Base.size(latt::DiagonalSquareLattice) = (latt.L, latt.W)
+Base.size(latt::DiagonalSquareLattice) = (latt.L, latt.W)
 
 function getSite(latt::DiagonalSquareLattice, l::Int, w::Int)
     lp = mod(l-1, latt.L) + 1

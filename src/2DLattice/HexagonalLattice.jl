@@ -23,7 +23,7 @@ end
 const HoneycombLattice = HexagonalLattice
 const HexaLatt = HexagonalLattice
 
-function Base.size(latt::HexagonalLattice) = (latt.L, latt.W)
+Base.size(latt::HexagonalLattice) = (latt.L, latt.W)
 
 function getSite(latt::HexagonalLattice, ci::Int, l::Int, w::Int)
     lp = mod(l-1, latt.L) + 1

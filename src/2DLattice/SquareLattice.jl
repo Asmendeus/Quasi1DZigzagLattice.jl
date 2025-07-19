@@ -18,7 +18,7 @@ struct SquareLattice <: AbstractLattice{2}
 end
 const SquaLatt = SquareLattice
 
-function Base.size(latt::SquareLattice) = (latt.L, latt.W)
+Base.size(latt::SquareLattice) = (latt.L, latt.W)
 
 function getSite(latt::SquareLattice, l::Int, w::Int)
     lp = mod(l-1, latt.L) + 1
