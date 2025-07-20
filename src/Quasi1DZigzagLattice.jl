@@ -17,5 +17,7 @@ export DiagonalHexagonalLattice, DiagHexaLatt
 include("2DLattice/DiagonalHexagonalLattice.jl")
 export KagomeLattice, KagoLatt
 include("2DLattice/KagomeLattice.jl")
+export DiagonalKagomeLattice, DiagKagoLatt
+include("2DLattice/DiagonalKagomeLattice.jl")
 
 end # module Quasi1DZigzagLattice

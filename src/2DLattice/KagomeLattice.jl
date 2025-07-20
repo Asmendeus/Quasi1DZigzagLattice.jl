@@ -1,4 +1,8 @@
 # Kagome lattice:
+#                  ╱     ╲ ╱     ╲ ╱     ╲ ╱
+#                 B       B       B       B
+#                ╱ ╲     ╱ ╲     ╱ ╲     ╱ ╲
+#               A — C — A — C — A — C — A — C
 #              ╱     ╲ ╱     ╲ ╱     ╲ ╱
 #             B       B       B       B
 #            ╱ ╲     ╱ ╲     ╱ ╲     ╱ ╲
@@ -48,12 +52,14 @@ function getAllNNPairs(latt::KagomeLattice; boundary::Symbol=:PBC)
         for l in 1:latt.L, w in 1:latt.W
             push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l, w)))
             push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 3, l, w)))
-            push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 1, l, w+1)))
             push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 3, l, w)))
+            push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 1, l, w+1)))
         end
         for l in 1:latt.L-1, w in 1:latt.W
             push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 1, l+1, w)))
-            push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 2, l+1, w-1)))
+        end
+        for l in 2:latt.L, w in 1:latt.W
+            push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 3, l-1, w+1)))
         end
     elseif boundary == :OBC
         for l in 1:latt.L, w in 1:latt.W
@@ -67,8 +73,8 @@ function getAllNNPairs(latt::KagomeLattice; boundary::Symbol=:PBC)
         for l in 1:latt.L-1, w in 1:latt.W
             push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 1, l+1, w)))
         end
-        for l in 1:latt.L-1, w in 2:latt.W
-            push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 2, l+1, w-1)))
+        for l in 2:latt.L, w in 1:latt.W-1
+            push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 3, l-1, w+1)))
         end
     else
         throw(ArgumentError("Undefined behavior of boundary condition `:$(boundary)`"))
