@@ -40,10 +40,10 @@ function getAllNNPairs(latt::DiagonalTriangularLattice; boundary::Symbol=:PBC)
         for w in 1:latt.W
             if isodd(w)
                 for l in 1:latt.L
-                    push!(paris, (getSite(latt, l, w), getSite(latt, l, w+1)))
+                    push!(pairs, (getSite(latt, l, w), getSite(latt, l, w+1)))
                 end
                 for l in 2:latt.L
-                    push!(paris, (getSite(latt, l, w), getSite(latt, l-1, w+1)))
+                    push!(pairs, (getSite(latt, l, w), getSite(latt, l-1, w+1)))
                 end
             else
                 for l in 1:latt.L-1
@@ -61,10 +61,10 @@ function getAllNNPairs(latt::DiagonalTriangularLattice; boundary::Symbol=:PBC)
         for w in 1:latt.W-1
             if isodd(w)
                 for l in 1:latt.L
-                    push!(paris, (getSite(latt, l, w), getSite(latt, l, w+1)))
+                    push!(pairs, (getSite(latt, l, w), getSite(latt, l, w+1)))
                 end
                 for l in 2:latt.L
-                    push!(paris, (getSite(latt, l, w), getSite(latt, l-1, w+1)))
+                    push!(pairs, (getSite(latt, l, w), getSite(latt, l-1, w+1)))
                 end
             else
                 for l in 1:latt.L-1
@@ -84,7 +84,7 @@ end
 function getAllNNNPairs(latt::DiagonalTriangularLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
-        for l in latt.L, w in latt.W
+        for l in 1:latt.L, w in 1:latt.W
             push!(pairs, (getSite(latt, l, w), getSite(latt, l, w+2)))
         end
         for w in 1:latt.W
@@ -105,7 +105,7 @@ function getAllNNNPairs(latt::DiagonalTriangularLattice; boundary::Symbol=:PBC)
             end
         end
     elseif boundary == :OBC
-        for l in latt.L, w in latt.W-2
+        for l in 1:latt.L, w in 1:latt.W-2
             push!(pairs, (getSite(latt, l, w), getSite(latt, l, w+2)))
         end
         for w in 1:latt.W-1
