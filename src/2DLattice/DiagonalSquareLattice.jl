@@ -14,6 +14,7 @@ struct DiagonalSquareLattice <: AbstractLattice{2}
     W::Int
     function DiagonalSquareLattice(L::Int, W::Int)
         L ≥ W || throw(ArgumentError("Quasi-one-dimensional diagonal square lattice requires L ≥ W!"))
+        iseven(W) || @warn "Odd-width diagonal square lattice with periodic boundary condition may be singular!"
         return new(L, W)
     end
 end

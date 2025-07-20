@@ -21,6 +21,7 @@ struct DiagonalHexagonalLattice <: AbstractLattice{2}
     W::Int
     function DiagonalHexagonalLattice(L::Int, W::Int)
         L ≥ W || throw(ArgumentError("Quasi-one-dimensional diagonal hexagonal lattice requires L ≥ W!"))
+        iseven(W) || @warn "Odd-width diagonal hexagonal lattice with periodic boundary condition may be singular!"
         return new(L, W)
     end
 end
