@@ -213,8 +213,8 @@ function Base.show(io::IO, latt::DiagonalKagomeLattice)
             print(repeat(" ", (maxlen+1)*(mod(w-1, 2)) + 2*halflen + (isodd(halflen) ? 1 : 0)) * "╱")
             println(repeat(repeat(" ", 3*halflen-1) * "╲" * repeat(" ", halflen-1) * "╱", latt.L-1))
         else
-            print(repeat(" ", (maxlen+1)*(mod(w-1, 2)) + halflen + (isodd(halflen) ? 1 : 0)))
-            println(repeat("╲" * repeat(" ", halflen-1) * "╱" * repeat(" ", maxlen+halflen), latt.L))
+            print(repeat(" ", (maxlen+1)*(mod(w-1, 2)) + halflen + (isodd(halflen) ? 1 : 0)) * "╲")
+            println(repeat(repeat(" ", halflen-1) * "╱" * repeat(" ", maxlen+halflen) * "╲", latt.L-1))
         end
         println_mainline_up(w)
         print(repeat(" ", (maxlen+1)*(mod(w-1, 2)) + halflen + (isodd(halflen) ? 1 : 0)))
