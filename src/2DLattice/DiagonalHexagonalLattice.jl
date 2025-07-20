@@ -143,3 +143,49 @@ function getAllNNNPairs(latt::DiagonalHexagonalLattice; boundary::Symbol=:PBC)
     end
     return pairs
 end
+
+function Base.show(io::IO, latt::DiagonalHexagonalLattice)
+
+    function println_mainline_up(w::Int)
+        print(repeat(" ", Int((maxlen+1)/2)*(isodd(w) ? 0 : 1)))
+        for l in 1:latt.L
+            site = string(getSite(latt, 2, l, w))
+            len = length(site)
+            len_l = ceil(Int, (maxlen-len)/2)
+            len_r = floor(Int, (maxlen-len)/2) + 1
+            print(repeat(" ", len_l) * site * repeat(" ", len_r))
+        end
+        println()
+    end
+    function println_mainline_dn(w::Int)
+        print(repeat(" ", Int((maxlen+1)/2)*(isodd(w) ? 0 : 1)))
+        for l in 1:latt.L
+            site = string(getSite(latt, 1, l, w))
+            len = length(site)
+            len_l = ceil(Int, (maxlen-len)/2)
+            len_r = floor(Int, (maxlen-len)/2) + 1
+            print(repeat(" ", len_l) * site * repeat(" ", len_r))
+        end
+        println()
+    end
+
+    maxlen = length(string(2*latt.L*latt.W)) + 2
+    iseven(maxlen) && (maxlen += 1)
+    halflen = Int((maxlen+1)/2)
+
+    println(io, "$(latt.L) × $(latt.W) DiagonalHexagonalLattice:")
+    for w = latt.W:-1:1
+        if isodd(w)
+            print(repeat(" ", halflen + (isodd(halflen) ? 1 : 0)) * "╱")
+            println(repeat(repeat(" ", halflen-1) * "╲" * repeat(" ", halflen-1) * "╱", latt.L-1))
+        else
+            print(repeat(" ", halflen + (isodd(halflen) ? 1 : 0)) * "╲")
+            println(repeat(repeat(" ", halflen-1) * "╱" * repeat(" ", halflen-1) * "╲", latt.L-1))
+        end
+        println_mainline_up(w)
+        print(repeat(" ", 1 + halflen*(isodd(w) ? 0 : 1) + (isodd(halflen) ? 1 : 0)) * "|")
+        println(repeat(repeat(" ", maxlen) * "|", latt.L-1))
+        println_mainline_dn(w)
+    end
+    return nothing
+end
