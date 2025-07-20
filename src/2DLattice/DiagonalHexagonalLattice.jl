@@ -21,7 +21,7 @@ struct DiagonalHexagonalLattice <: AbstractLattice{2}
     W::Int
     function DiagonalHexagonalLattice(L::Int, W::Int)
         L ≥ W || throw(ArgumentError("Quasi-one-dimensional diagonal hexagonal lattice requires L ≥ W!"))
-        iseven(W) || @warn "Odd-width diagonal hexagonal lattice with periodic boundary condition may be singular!"
+        iseven(W) || @warn "Odd-width diagonal hexagonal lattice with periodic boundary condition is singular in geometry!"
         return new(L, W)
     end
 end
@@ -43,7 +43,7 @@ function getAllNNPairs(latt::DiagonalHexagonalLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
         for l in 1:latt.L, w in 1:latt.W
-            push!(paris, (getSite(latt, 1, l, w), getSite(latt, 2, l, w)))
+            push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l, w)))
         end
         for w in 1:latt.W
             if isodd(w)
@@ -64,7 +64,7 @@ function getAllNNPairs(latt::DiagonalHexagonalLattice; boundary::Symbol=:PBC)
         end
     elseif boundary == :OBC
         for l in 1:latt.L, w in 1:latt.W
-            push!(paris, (getSite(latt, 1, l, w), getSite(latt, 2, l, w)))
+            push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l, w)))
         end
         for w in 1:latt.W-1
             if isodd(w)

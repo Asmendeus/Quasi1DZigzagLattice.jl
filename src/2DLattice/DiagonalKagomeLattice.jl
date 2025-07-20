@@ -21,7 +21,7 @@ struct DiagonalKagomeLattice <: AbstractLattice{2}
     W::Int
     function DiagonalKagomeLattice(L::Int, W::Int)
         L ≥ W || throw(ArgumentError("Quasi-one-dimensional Kagome lattice requires L ≥ W!"))
-        iseven(W) || @warn "Odd-width diagonal Kagome lattice with periodic boundary condition may be singular!"
+        iseven(W) || @warn "Odd-width diagonal Kagome lattice with periodic boundary condition is singular in geometry!"
         return new(L, W)
     end
 end
