@@ -1,12 +1,12 @@
 # Square Lattice:
 #   |    |    |    |
-#   A —— A —— A —— A ——
+#   A —— A —— A —— A
 #   |    |    |    |
-#   A —— A —— A —— A ——
+#   A —— A —— A —— A
 #   |    |    |    |
-#   A —— A —— A —— A ——
+#   A —— A —— A —— A
 #   |    |    |    |
-#   A —— A —— A —— A ——
+#   A —— A —— A —— A
 
 struct SquareLattice <: AbstractLattice{2}
     L::Int
@@ -80,7 +80,7 @@ function Base.show(io::IO, latt::SquareLattice)
             len = length(site)
             len_l = ceil(Int, (maxlen-len)/2)
             len_r = floor(Int, (maxlen-len)/2)
-            print(repeat(" ", len_l) * site * repeat(" ", len_r) * "—")
+            print(repeat(" ", len_l) * site * repeat(" ", len_r) * (l == latt.L ? "" : "—"))
         end
         println()
     end

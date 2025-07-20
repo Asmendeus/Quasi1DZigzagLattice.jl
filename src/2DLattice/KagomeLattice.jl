@@ -2,15 +2,15 @@
 #              ╱     ╲ ╱     ╲ ╱     ╲ ╱
 #             B       B       B       B
 #            ╱ ╲     ╱ ╲     ╱ ╲     ╱ ╲
-#           A — C — A — C — A — C — A — C —
+#           A — C — A — C — A — C — A — C
 #          ╱     ╲ ╱     ╲ ╱     ╲ ╱
 #         B       B       B       B
 #        ╱ ╲     ╱ ╲     ╱ ╲     ╱ ╲
-#       A — C — A — C — A — C — A — C —
+#       A — C — A — C — A — C — A — C
 #      ╱     ╲ ╱     ╲ ╱     ╲ ╱
 #     B       B       B       B
 #    ╱ ╲     ╱ ╲     ╱ ╲     ╱ ╲
-#   A — C — A — C — A — C — A — C —
+#   A — C — A — C — A — C — A — C
 
 struct KagomeLattice <: AbstractLattice{2}
     L::Int
