@@ -1,4 +1,4 @@
-# Quasi1DZigzagLattice
+# Quasi1DZigzagLattices
 
 A package for MPS/MPO algorithms for generating Zigzag path on a lattice
 
