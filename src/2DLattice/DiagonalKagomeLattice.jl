@@ -21,7 +21,6 @@ struct DiagonalKagomeLattice <: AbstractLattice{2}
     W::Int
     function DiagonalKagomeLattice(L::Int, W::Int)
         L ≥ W || throw(ArgumentError("Quasi-one-dimensional Kagome lattice requires L ≥ W!"))
-        iseven(W) || @warn "Odd-width diagonal Kagome lattice with periodic boundary condition is singular in geometry!"
         return new(L, W)
     end
 end
@@ -50,6 +49,8 @@ end
 function getAllNNPairs(latt::DiagonalKagomeLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
+        latt.W ≤ 2 || @warn "W ≤ 2 may lead to singular behavior with periodic boundary condition!"
+        iseven(latt.W) || @warn "Odd-width diagonal Kagome lattice with periodic boundary condition is singular in geometry!"
         for l in 1:latt.L, w in 1:latt.W
             push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l, w)))
             push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 3, l, w)))
@@ -110,6 +111,8 @@ end
 function getAllNNNPairs(latt::DiagonalKagomeLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
+        latt.W ≤ 2 || @warn "W ≤ 2 may lead to singular behavior with periodic boundary condition!"
+        iseven(latt.W) || @warn "Odd-width diagonal Kagome lattice with periodic boundary condition is singular in geometry!"
         for w in 1:latt.W
             for l in 2:latt.L, w in 1:latt.W
                 push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l-1, w)))

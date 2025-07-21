@@ -49,6 +49,8 @@ end
 function getAllNNPairs(latt::KagomeLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
+        latt.W ≤ 2 || @warn "W ≤ 2 may lead to singular behavior with periodic boundary condition!"
+        iseven(latt.W) || @warn "Odd-width Kagome lattice with periodic boundary condition is singular in geometry!"
         for l in 1:latt.L, w in 1:latt.W
             push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l, w)))
             push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 3, l, w)))
@@ -85,6 +87,8 @@ end
 function getAllNNNPairs(latt::KagomeLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
+        latt.W ≤ 2 || @warn "W ≤ 2 may lead to singular behavior with periodic boundary condition!"
+        iseven(latt.W) || @warn "Odd-width Kagome lattice with periodic boundary condition is singular in geometry!"
         for l in 1:latt.L-1, w in 1:latt.W
             push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l+1, w-1)))
             push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 1, l+1, w)))

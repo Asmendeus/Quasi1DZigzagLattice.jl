@@ -1,4 +1,4 @@
-module Quasi1DZigzagLattice
+module Quasi1DZigzagLattices
 
 export AbstractLattice
 include("AbstractLattice.jl")

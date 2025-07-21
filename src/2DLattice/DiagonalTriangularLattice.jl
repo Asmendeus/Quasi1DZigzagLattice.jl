@@ -13,7 +13,6 @@ struct DiagonalTriangularLattice <: AbstractLattice{2}
     W::Int
     function DiagonalTriangularLattice(L::Int, W::Int)
         L ≥ W || throw(ArgumentError("Quasi-one-dimensional diagonal triangular lattice requires L ≥ W!"))
-        iseven(W) || @warn "Odd-width diagonal triangular lattice with periodic boundary condition is singular in geometry!"
         return new(L, W)
     end
 end
@@ -34,6 +33,8 @@ end
 function getAllNNPairs(latt::DiagonalTriangularLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
+        latt.W ≤ 2 || @warn "W ≤ 2 may lead to singular behavior with periodic boundary condition!"
+        iseven(latt.W) || @warn "Odd-width diagonal triangular lattice with periodic boundary condition is singular in geometry!"
         for l in 1:latt.L-1, w in 1:latt.W
             push!(pairs, (getSite(latt, l, w), getSite(latt, l+1, w)))
         end
@@ -84,6 +85,8 @@ end
 function getAllNNNPairs(latt::DiagonalTriangularLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
+        latt.W ≤ 4 || @warn "W ≤ 4 may lead to singular behavior with periodic boundary condition!"
+        iseven(latt.W) || @warn "Odd-width diagonal triangular lattice with periodic boundary condition is singular in geometry!"
         for l in 1:latt.L, w in 1:latt.W
             push!(pairs, (getSite(latt, l, w), getSite(latt, l, w+2)))
         end
