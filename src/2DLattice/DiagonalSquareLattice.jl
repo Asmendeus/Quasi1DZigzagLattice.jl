@@ -34,7 +34,7 @@ end
 function getAllNNPairs(latt::DiagonalSquareLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
-        latt.W ≤ 2 || @warn "W ≤ 2 may lead to singular behavior with periodic boundary condition!"
+        latt.W > 2 || @warn "W ≤ 2 may lead to singular behavior with periodic boundary condition!"
         iseven(latt.W) || @warn "Odd-width diagonal square lattice with periodic boundary condition is singular in geometry!"
         for w in 1:latt.W
             if isodd(w)
@@ -80,7 +80,7 @@ end
 function getAllNNNPairs(latt::DiagonalSquareLattice; boundary::Symbol=:PBC)
     pairs = Tuple{Int, Int}[]
     if boundary == :PBC
-        latt.W ≤ 4 || @warn "W ≤ 4 may lead to singular behavior with periodic boundary condition!"
+        latt.W > 4 || @warn "W ≤ 4 may lead to singular behavior with periodic boundary condition!"
         iseven(latt.W) || @warn "Odd-width diagonal square lattice with periodic boundary condition is singular in geometry!"
         for l in 1:latt.L-1, w in 1:latt.W
             push!(pairs, (getSite(latt, l, w), getSite(latt, l+1, w)))
