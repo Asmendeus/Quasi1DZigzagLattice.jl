@@ -39,10 +39,10 @@ function getAllNNPairs(latt::DiagonalSquareLattice; boundary::Symbol=:PBC)
         for w in 1:latt.W
             if isodd(w)
                 for l in 1:latt.L
-                    push!(paris, (getSite(latt, l, w), getSite(latt, l, w+1)))
+                    push!(pairs, (getSite(latt, l, w), getSite(latt, l, w+1)))
                 end
                 for l in 2:latt.L
-                    push!(paris, (getSite(latt, l, w), getSite(latt, l-1, w+1)))
+                    push!(pairs, (getSite(latt, l, w), getSite(latt, l-1, w+1)))
                 end
             else
                 for l in 1:latt.L-1
@@ -57,10 +57,10 @@ function getAllNNPairs(latt::DiagonalSquareLattice; boundary::Symbol=:PBC)
         for w in 1:latt.W-1
             if isodd(w)
                 for l in 1:latt.L
-                    push!(paris, (getSite(latt, l, w), getSite(latt, l, w+1)))
+                    push!(pairs, (getSite(latt, l, w), getSite(latt, l, w+1)))
                 end
                 for l in 2:latt.L
-                    push!(paris, (getSite(latt, l, w), getSite(latt, l-1, w+1)))
+                    push!(pairs, (getSite(latt, l, w), getSite(latt, l-1, w+1)))
                 end
             else
                 for l in 1:latt.L-1
