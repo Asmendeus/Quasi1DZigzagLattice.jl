@@ -113,13 +113,13 @@ function getAllNNNPairs(latt::DiagonalKagomeLattice; boundary::Symbol=:PBC)
     if boundary == :PBC
         latt.W > 2 || @warn "W ≤ 2 may lead to singular behavior with periodic boundary condition!"
         iseven(latt.W) || @warn "Odd-width diagonal Kagome lattice with periodic boundary condition is singular in geometry!"
+        for l in 2:latt.L, w in 1:latt.W
+            push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l-1, w)))
+        end
+        for l in 1:latt.L-1, w in 1:latt.W
+            push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 2, l+1, w)))
+        end
         for w in 1:latt.W
-            for l in 2:latt.L, w in 1:latt.W
-                push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l-1, w)))
-            end
-            for l in 1:latt.L-1, w in 1:latt.W
-                push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 2, l+1, w)))
-            end
             if isodd(w)
                 for l in 1:latt.L
                     push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 1, l, w+1)))
@@ -141,32 +141,30 @@ function getAllNNNPairs(latt::DiagonalKagomeLattice; boundary::Symbol=:PBC)
             end
         end
     elseif boundary == :OBC
-        for w in 1:latt.W
-            for l in 2:latt.L, w in 1:latt.W
-                push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l-1, w)))
-            end
-            for l in 1:latt.L-1, w in 1:latt.W
-                push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 2, l+1, w)))
-            end
-            for w in 1:latt.W-1
-                if isodd(w)
-                    for l in 1:latt.L
-                        push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 1, l, w+1)))
-                        push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 3, l, w+1)))
-                    end
-                    for l in 2:latt.L
-                        push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 1, l-1, w+1)))
-                        push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 3, l-1, w+1)))
-                    end
-                else
-                    for l in 1:latt.L
-                        push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 1, l, w+1)))
-                        push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 3, l, w+1)))
-                    end
-                    for l in 1:latt.L-1
-                        push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 1, l+1, w+1)))
-                        push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 3, l+1, w+1)))
-                    end
+        for l in 2:latt.L, w in 1:latt.W
+            push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 2, l-1, w)))
+        end
+        for l in 1:latt.L-1, w in 1:latt.W
+            push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 2, l+1, w)))
+        end
+        for w in 1:latt.W-1
+            if isodd(w)
+                for l in 1:latt.L
+                    push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 1, l, w+1)))
+                    push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 3, l, w+1)))
+                end
+                for l in 2:latt.L
+                    push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 1, l-1, w+1)))
+                    push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 3, l-1, w+1)))
+                end
+            else
+                for l in 1:latt.L
+                    push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 1, l, w+1)))
+                    push!(pairs, (getSite(latt, 1, l, w), getSite(latt, 3, l, w+1)))
+                end
+                for l in 1:latt.L-1
+                    push!(pairs, (getSite(latt, 3, l, w), getSite(latt, 1, l+1, w+1)))
+                    push!(pairs, (getSite(latt, 2, l, w), getSite(latt, 3, l+1, w+1)))
                 end
             end
         end
