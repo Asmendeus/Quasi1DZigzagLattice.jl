@@ -20,7 +20,7 @@ struct DiagonalKagomeLattice <: AbstractLattice{2}
     L::Int
     W::Int
     function DiagonalKagomeLattice(L::Int, W::Int)
-        L ≥ W || throw(ArgumentError("Quasi-one-dimensional Kagome lattice requires L ≥ W!"))
+        L ≥ W || throw(ArgumentError("Quasi-one-dimensional diagonal Kagome lattice requires L ≥ W!"))
         return new(L, W)
     end
 end
